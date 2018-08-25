@@ -33,9 +33,9 @@ import com.zyd.blog.business.consts.FileConst;
  * @since 1.0
  */
 public enum QiniuUploadType {
-    QRCODE("zhyd/qrcode/", FileConst.DEFAULT_IMG_WIDTH, FileConst.DEFAULT_IMG_HEIGHT, FileConst.DEFAULT_IMG_SIZE),
-    SIMPLE("zhyd/article/", FileConst.DEFAULT_IMG_WIDTH, FileConst.DEFAULT_IMG_HEIGHT, FileConst.DEFAULT_IMG_SIZE),
-    COVER_IMAGE("zhyd/cover/", FileConst.DEFAULT_IMG_WIDTH, FileConst.DEFAULT_IMG_HEIGHT, FileConst.DEFAULT_IMG_SIZE);
+    QRCODE("ralap/qrcode/", FileConst.DEFAULT_IMG_WIDTH, FileConst.DEFAULT_IMG_HEIGHT, FileConst.DEFAULT_IMG_SIZE),
+    SIMPLE("ralap/article/", FileConst.DEFAULT_IMG_WIDTH, FileConst.DEFAULT_IMG_HEIGHT, FileConst.DEFAULT_IMG_SIZE),
+    COVER_IMAGE("ralap/cover/", FileConst.DEFAULT_IMG_WIDTH, FileConst.DEFAULT_IMG_HEIGHT, FileConst.DEFAULT_IMG_SIZE);
 
     private String path;
     /**

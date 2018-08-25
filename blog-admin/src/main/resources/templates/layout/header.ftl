@@ -32,7 +32,7 @@
                 <div class="clearfix"></div>
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="/assets/images/loading.gif" alt="..." class="img-circle profile_img">
+                        <img src="${user.avatar}" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span id="hello_msg">&nbsp;</span>
