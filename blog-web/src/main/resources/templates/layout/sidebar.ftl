@@ -8,13 +8,13 @@
         </div>
     <#else>
         <div class="sidebar-module" style="position: relative;">
-            <a href='https://gitee.com/yadong.zhang/DBlog' target="_blank" rel="external nofollow"><img src='https://gitee.com/yadong.zhang/DBlog/widgets/widget_1.svg?color=07b83f' alt='Fork me on Gitee' style="position: absolute;right: 0;"/></a>
+            <a href='https://github.com/Noing/ralap-blog' target="_blank" rel="external nofollow"><img src='https://gitee.com/itFanRalap/my_blog/widgets/widget_1.svg?color=C71D24' alt='Fork me on Gitee' style="position: absolute;right: 0;"/></a>
             <h5 class="sidebar-title"><i class="fa fa-home icon"></i><strong>关于我</strong></h5>
             <div class="widget">
                 <div id="feed_widget">
                     <div class="feed-about">
                         <div class="about-main">
-                            <div class="about-img"><a href="${config.staticWebSite}/img/wx_300px.png" class="showImage" title="微信公众号"><img src="${config.staticWebSite}/img/wx_300px.png" alt="微信公众号"></a></div>
+                            <div class="about-img"><a href="${config.staticWebSite}/img/WX.jpg" class="showImage" title="微信号"><img src="${config.staticWebSite}/img/WX.jpg" alt="微信公众号"></a></div>
                             <div class="about-name">${config.siteName}</div>
                             <div class="about-the">${config.siteDesc?if_exists}</div>
                         </div>
@@ -22,17 +22,17 @@
                         <!-- 方案一：图标展示 -->
                         <ul class="widget-icon">
                             <li class="weixin auto-shake" data-container="body"
-                                data-toggle="popover" data-trigger="hover" data-placement="bottom" data-html="true" data-content="<img src='${config.staticWebSite}/img/wx_300px.png' style='width: 130px;' alt='QR Code'>">
+                                data-toggle="popover" data-trigger="hover" data-placement="bottom" data-html="true" data-content="<img src='${config.staticWebSite}/img/WX.jpg' style='width: 130px;' alt='QR Code'>">
                                 <a class="tag-icon" title="微信" rel="external nofollow"><i class="fa fa-weixin"></i></a>
                             </li>
                             <li class="tqq auto-shake">
-                                <a class="tag-icon" href="javascript:window.open('tencent://message/?uin=843977358&Site=www.${config.domain}&Menu=yes')" title="点击QQ联系我" target="blank" rel="external nofollow"><i class="fa fa-qq"></i></a>
+                                <a class="tag-icon" href="javascript:window.open('tencent://message/?uin=1414362917&Site=www.${config.domain}&Menu=yes')" title="点击QQ联系我" target="blank" rel="external nofollow"><i class="fa fa-qq"></i></a>
                             </li>
                             <li class="tsina auto-shake">
-                                <a class="tag-icon" href="http://weibo.com/211230415" title="点击查看我的微博" target="_blank" rel="external nofollow"><i class="fa fa-weibo"></i></a>
+                                <a class="tag-icon" href="${config.weibo}" title="点击查看我的微博" target="_blank" rel="external nofollow"><i class="fa fa-weibo"></i></a>
                             </li>
                             <li class="github auto-shake">
-                                <a class="tag-icon" href="https://github.com/zhangyd-c" title="点击查看我的github" target="_blank" rel="external nofollow"><i class="fa fa-github"></i></a>
+                                <a class="tag-icon" href="${config.github}" title="点击查看我的github" target="_blank" rel="external nofollow"><i class="fa fa-github"></i></a>
                             </li>
                         </ul>
                         <!-- 方案二：列表展示 -->

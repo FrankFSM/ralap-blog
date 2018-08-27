@@ -32,7 +32,7 @@
                 </div>
                 <h5 class="legend-title">赞助</h5>
                 <div class="alert alert-warning alert-dismissible simple-alert fade-in" role="alert">
-                    <strong>注!</strong> 如果您觉得我的网站能够帮助到您，请您多多支持。我的支付宝账号：<span class="label label-success">1602008388#qq.com</span>（#==@）！
+                    <strong>注!</strong> 如果您觉得我的网站能够帮助到您，请您多多支持。我的支付宝账号：<span class="label label-success">18586076542</span>（#==@）！
                     扫码点击：<a class="btn btn-danger btn-sm reward" onclick="PaymentUtils.show();">打赏</a>
                 </div>
             </div>
