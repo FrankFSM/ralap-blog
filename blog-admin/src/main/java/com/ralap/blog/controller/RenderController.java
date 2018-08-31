@@ -215,4 +215,11 @@ public class RenderController {
         model.addAttribute("online", websocketServer.getOnlineUserCount());
         return ResultUtil.view("notification");
     }
+
+    @RequiresPermissions("ebooks")
+    @BussinessLog("进入电子书")
+    @GetMapping("/ebooks")
+    public ModelAndView ebooks() {
+        return ResultUtil.view("ebook/list");
+    }
 }
