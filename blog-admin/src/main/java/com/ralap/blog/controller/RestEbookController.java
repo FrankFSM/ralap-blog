@@ -34,6 +34,7 @@ import com.ralap.blog.framework.object.PageResult;
 import com.ralap.blog.framework.object.ResponseVO;
 import com.ralap.blog.persistence.beans.BizEbook;
 import com.ralap.blog.util.ResultUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +46,15 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * RestEbookController
  * 电子书
- * @author: ralap 
+ *
+ * @author: ralap
  * @date: created at 2018/8/31 16:30
  */
+@Slf4j
 @RestController
 @RequestMapping("/ebook")
 public class RestEbookController {
+
     @Autowired
     private BizEbookService bizEbookService;
     @Autowired
@@ -79,7 +83,7 @@ public class RestEbookController {
         for (Long id : ids) {
             bizEbookService.removeByPrimaryKey(id);
         }
-        return ResultUtil.success("成功删除 [" + ids.length + "] 个友情链接");
+        return ResultUtil.success("成功删除 [" + ids.length + "] 个电子书链接");
     }
 
     @RequiresPermissions("ebook:get")
@@ -94,8 +98,8 @@ public class RestEbookController {
         try {
             bizEbookService.updateSelective(ebook);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtil.error("友情链接修改失败！");
+            log.error("电子书修改失败", e);
+            return ResultUtil.error("电子书修改失败！");
         }
         return ResultUtil.success(ResponseStatus.SUCCESS);
     }
