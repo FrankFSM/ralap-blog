@@ -26,13 +26,6 @@ import com.ralap.blog.business.enums.TemplateKeyEnum;
 import com.ralap.blog.business.service.BizCommentService;
 import com.ralap.blog.business.service.MailService;
 import com.ralap.blog.business.vo.CommentConditionVO;
-import com.ralap.blog.util.ResultUtil;
-import com.ralap.blog.business.entity.Comment;
-import com.ralap.blog.business.enums.ResponseStatus;
-import com.ralap.blog.business.enums.TemplateKeyEnum;
-import com.ralap.blog.business.service.BizCommentService;
-import com.ralap.blog.business.service.MailService;
-import com.ralap.blog.business.vo.CommentConditionVO;
 import com.ralap.blog.framework.exception.ZhydCommentException;
 import com.ralap.blog.framework.object.PageResult;
 import com.ralap.blog.framework.object.ResponseVO;
@@ -59,6 +52,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/comment")
 public class RestCommentController {
+
     @Autowired
     private BizCommentService commentService;
     @Autowired
@@ -76,7 +70,7 @@ public class RestCommentController {
     public ResponseVO reply(Comment comment) {
         try {
             commentService.commentForAdmin(comment);
-        } catch (ZhydCommentException e){
+        } catch (ZhydCommentException e) {
             return ResultUtil.error(e.getMessage());
         }
         return ResultUtil.success("成功");
@@ -114,20 +108,17 @@ public class RestCommentController {
 
     /**
      * 审核
-     *
-     * @param comment
-     * @return
      */
     @RequiresPermissions("comment:audit")
     @PostMapping("/audit")
     public ResponseVO audit(Comment comment, String contentText, Boolean sendEmail) {
         try {
             commentService.updateSelective(comment);
-            if(!StringUtils.isEmpty(contentText)){
+            if (!StringUtils.isEmpty(contentText)) {
                 comment.setContent(contentText);
                 commentService.commentForAdmin(comment);
             }
-            if(null != sendEmail && sendEmail){
+            if (null != sendEmail && sendEmail) {
                 Comment commentDB = commentService.getByPrimaryKey(comment.getId());
                 mailService.send(commentDB, TemplateKeyEnum.TM_COMMENT_AUDIT, true);
             }
@@ -140,9 +131,6 @@ public class RestCommentController {
 
     /**
      * 正在审核的
-     *
-     * @param comment
-     * @return
      */
     @RequiresUser
     @PostMapping("/listVerifying")

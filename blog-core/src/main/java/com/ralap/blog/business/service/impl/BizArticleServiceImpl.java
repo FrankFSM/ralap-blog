@@ -22,9 +22,6 @@ package com.ralap.blog.business.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ralap.blog.business.annotation.RedisCache;
-import com.ralap.blog.business.service.BizArticleService;
-import com.ralap.blog.business.service.BizArticleTagsService;
-import com.ralap.blog.business.annotation.RedisCache;
 import com.ralap.blog.business.entity.Article;
 import com.ralap.blog.business.entity.User;
 import com.ralap.blog.business.enums.ArticleStatusEnum;
@@ -34,7 +31,11 @@ import com.ralap.blog.business.service.BizArticleTagsService;
 import com.ralap.blog.business.vo.ArticleConditionVO;
 import com.ralap.blog.framework.exception.ZhydArticleException;
 import com.ralap.blog.framework.holder.RequestHolder;
-import com.ralap.blog.persistence.beans.*;
+import com.ralap.blog.persistence.beans.BizArticle;
+import com.ralap.blog.persistence.beans.BizArticleLook;
+import com.ralap.blog.persistence.beans.BizArticleLove;
+import com.ralap.blog.persistence.beans.BizArticleTags;
+import com.ralap.blog.persistence.beans.BizTags;
 import com.ralap.blog.persistence.mapper.BizArticleLookMapper;
 import com.ralap.blog.persistence.mapper.BizArticleLoveMapper;
 import com.ralap.blog.persistence.mapper.BizArticleMapper;
@@ -42,6 +43,15 @@ import com.ralap.blog.persistence.mapper.BizArticleTagsMapper;
 import com.ralap.blog.util.FileUtil;
 import com.ralap.blog.util.IpUtil;
 import com.ralap.blog.util.SessionUtil;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -51,9 +61,6 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 import tk.mybatis.mapper.entity.Example;
-
-import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 文章列表
@@ -82,9 +89,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 分页查询
-     *
-     * @param vo
-     * @return
      */
     @Override
     public PageInfo<Article> findPageBreakByCondition(ArticleConditionVO vo) {
@@ -117,9 +121,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 站长推荐
-     *
-     * @param pageSize
-     * @return
      */
     @Override
     public List<Article> listRecommended(int pageSize) {
@@ -133,9 +134,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 近期文章
-     *
-     * @param pageSize
-     * @return
      */
     @Override
     public List<Article> listRecent(int pageSize) {
@@ -148,9 +146,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 随机文章
-     *
-     * @param pageSize
-     * @return
      */
     @Override
     public List<Article> listRandom(int pageSize) {
@@ -165,10 +160,6 @@ public class BizArticleServiceImpl implements BizArticleService {
     /**
      * 根据某篇文章获取与该文章相关的文章<br>
      * 搜索同类型、同标签下的文章
-     *
-     * @param pageSize
-     * @param article
-     * @return
      */
     @Override
     public List<Article> listRelatedArticle(int pageSize, Article article) {
@@ -193,8 +184,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 获取上一篇和下一篇
-     *
-     * @return
      */
     @Override
     public Map<String, Article> getPrevAndNextArticles(Date insertTime) {
@@ -216,8 +205,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 文章点赞
-     *
-     * @param id
      */
     @Override
     @RedisCache(flush = true)
@@ -244,9 +231,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 是否存在文章
-     *
-     * @param id
-     * @return
      */
     @Override
     public boolean isExist(Long id) {
@@ -256,8 +240,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 获取素材库
-     *
-     * @return
      */
     @Override
     public List<String> listMaterial() {
@@ -266,11 +248,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 发布文章
-     *
-     * @param article
-     * @param tags
-     * @param file
-     * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -299,10 +276,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 修改置顶、推荐
-     *
-     * @param type
-     * @param id
-     * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -328,8 +301,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 获取热门文章
-     *
-     * @return
      */
     @Override
     public List<Article> listHotArticle(int pageSize) {
@@ -348,9 +319,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 保存一个实体，null的属性不会保存，会使用数据库默认值
-     *
-     * @param entity
-     * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -366,8 +334,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 批量插入，支持批量插入的数据库可以使用，例如MySQL,H2等，另外该接口限制实体包含id属性并且必须为自增列
-     *
-     * @param entities
      */
     @Override
     public void insertList(List<Article> entities) {
@@ -385,9 +351,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 根据主键字段进行删除，方法参数必须包含完整的主键属性
-     *
-     * @param primaryKey
-     * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -413,9 +376,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 根据主键更新实体全部字段，null值会被更新
-     *
-     * @param entity
-     * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -429,9 +389,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 根据主键更新属性不为null的值
-     *
-     * @param entity
-     * @return
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -445,9 +402,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号
-     *
-     * @param primaryKey
-     * @return
      */
     @Override
     public Article getByPrimaryKey(Long primaryKey) {
@@ -458,9 +412,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 根据实体中的属性进行查询，只能有一个返回值，有多个结果时抛出异常，查询条件使用等号
-     *
-     * @param entity
-     * @return
      */
     @Override
     public Article getOneByEntity(Article entity) {
@@ -471,8 +422,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 查询全部结果，listByEntity(null)方法能达到同样的效果
-     *
-     * @return
      */
     @Override
     public List<Article> listAll() {
@@ -490,9 +439,6 @@ public class BizArticleServiceImpl implements BizArticleService {
 
     /**
      * 根据实体中的属性值进行查询，查询条件使用等号
-     *
-     * @param entity
-     * @return
      */
     @Override
     public List<Article> listByEntity(Article entity) {
