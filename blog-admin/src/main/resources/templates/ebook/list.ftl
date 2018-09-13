@@ -61,19 +61,32 @@
             </div>
           </div>
           <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12"
+                   for="homeDesc">封面 </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input type="file" class="form-control col-md-7 col-xs-12 uploadPreview"
+                     data-preview-container="#coverImageFilePreview"
+                     name="coverImageFile" id="coverImageFile"/>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <div id="coverImageFilePreview" style="width: 200px;height: auto"></div>
+            </div>
+          </div>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-3" for="description">下载地址: </label>
+            <div class="col-md-7 col-sm-7 col-xs-7">
+              <input type="text" class="form-control" id="path" name="path"
+                     placeholder="请输下载地址"/>
+            </div>
+          </div>
+          <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-3" for="description">描述: </label>
             <div class="col-md-7 col-sm-7 col-xs-7">
               <input type="text" class="form-control" id="description" name="description"
                      placeholder="请输入描述"/>
             </div>
           </div>
-          <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-3" for="coverImage">Logo: </label>
-            <div class="col-md-7 col-sm-7 col-xs-7">
-              <input type="text" class="form-control" id="coverImage" name="coverImage"
-                     placeholder="请输入封面"/>
-            </div>
-          </div>
+
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-3" for="status">状态: </label>
             <div class="col-md-7 col-sm-7 col-xs-7">
@@ -142,7 +155,7 @@
               editable: false,
               width: '40px',
               formatter: function (code) {
-                return !code ? '' : '<img src="' + code + '" width="20">';
+                return !code ? '' : '<img src="' + appConfig.qiniuPath + code + '" width="20">';
               }
             }, {
               field: 'path',

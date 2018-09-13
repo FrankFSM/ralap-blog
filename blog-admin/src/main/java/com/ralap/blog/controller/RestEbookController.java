@@ -23,6 +23,7 @@ import com.github.pagehelper.PageInfo;
 import com.ralap.blog.business.entity.Ebook;
 import com.ralap.blog.business.entity.Link;
 import com.ralap.blog.business.enums.LinkSourceEnum;
+import com.ralap.blog.business.enums.QiniuUploadType;
 import com.ralap.blog.business.enums.ResponseStatus;
 import com.ralap.blog.business.enums.TemplateKeyEnum;
 import com.ralap.blog.business.service.BizEbookService;
@@ -33,6 +34,7 @@ import com.ralap.blog.business.vo.LinkConditionVO;
 import com.ralap.blog.framework.object.PageResult;
 import com.ralap.blog.framework.object.ResponseVO;
 import com.ralap.blog.persistence.beans.BizEbook;
+import com.ralap.blog.util.FileUtil;
 import com.ralap.blog.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
@@ -41,7 +43,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * RestEbookController
@@ -94,8 +98,10 @@ public class RestEbookController {
 
     @RequiresPermissions("ebook:edit")
     @PostMapping("/edit")
-    public ResponseVO edit(Ebook ebook) {
+    public ResponseVO edit(Ebook ebook,@RequestParam(value = "coverImageFile",required = false) MultipartFile coverImageFile) {
         try {
+            ebook.setCoverImage(
+                    FileUtil.uploadToQiniu(coverImageFile, QiniuUploadType.QRCODE, true));
             bizEbookService.updateSelective(ebook);
         } catch (Exception e) {
             log.error("电子书修改失败", e);

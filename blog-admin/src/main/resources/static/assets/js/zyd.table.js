@@ -131,6 +131,9 @@
                             // console.log(info);
                             resetForm(info);
                             $("#addOrUpdateModal").modal('show');
+                            $("#coverImageFilePreview").html('<img src="'
+                              + appConfig.qiniuPath + info.coverImage
+                              + '" alt="封面" class="img-responsive img-rounded auto-shake">');
                             $("#addOrUpdateModal").find(".modal-dialog .modal-content .modal-header h4.modal-title").html("修改" + options.modalName);
                             if ($("#password") && $("#password")[0]) {
                                 $("#password").removeAttr("required");
@@ -188,12 +191,12 @@
 
 function bindSaveInfoEvent(url) {
     $(".addOrUpdateBtn").unbind('click');
+    var $form = $("#addOrUpdateForm");
     $(".addOrUpdateBtn").click(function () {
         if (validator.checkAll($("#addOrUpdateForm"))) {
-            $.ajax({
-                type: "post",
+          $form.ajaxSubmit({
+                type: "POST",
                 url: url,
-                data: $("#addOrUpdateForm").serialize(),
                 success: function (json) {
                     $.alert.ajaxSuccess(json);
                     $("#addOrUpdateModal").modal('hide');
