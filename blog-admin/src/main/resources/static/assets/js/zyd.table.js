@@ -108,6 +108,7 @@
                 $("#btn_add").click(function () {
                     resetForm();
                     $("#addOrUpdateModal").modal('show');
+                  $("#coverImageFilePreview").html("");
                     $("#addOrUpdateModal").find(".modal-dialog .modal-content .modal-header h4.modal-title").html("添加" + options.modalName);
 
                     if ($("#password") && $("#password")[0]) {

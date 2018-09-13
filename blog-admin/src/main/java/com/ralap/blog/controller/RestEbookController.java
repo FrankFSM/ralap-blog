@@ -73,7 +73,10 @@ public class RestEbookController {
 
     @RequiresPermissions("ebook:add")
     @PostMapping(value = "/add")
-    public ResponseVO add(Ebook ebook) {
+    public ResponseVO add(Ebook ebook,
+            @RequestParam(value = "coverImageFile", required = false) MultipartFile coverImageFile) {
+        ebook.setCoverImage(
+                FileUtil.uploadToQiniu(coverImageFile, QiniuUploadType.QRCODE, true));
         bizEbookService.insert(ebook);
         return ResultUtil.success("成功");
     }
@@ -98,7 +101,8 @@ public class RestEbookController {
 
     @RequiresPermissions("ebook:edit")
     @PostMapping("/edit")
-    public ResponseVO edit(Ebook ebook,@RequestParam(value = "coverImageFile",required = false) MultipartFile coverImageFile) {
+    public ResponseVO edit(Ebook ebook,
+            @RequestParam(value = "coverImageFile", required = false) MultipartFile coverImageFile) {
         try {
             ebook.setCoverImage(
                     FileUtil.uploadToQiniu(coverImageFile, QiniuUploadType.QRCODE, true));

@@ -53,7 +53,7 @@
             </div>
           </div>
           <div class="item form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-3" for="author">author: <span
+            <label class="control-label col-md-3 col-sm-3 col-xs-3" for="author">作者: <span
                 class="required">*</span></label>
             <div class="col-md-7 col-sm-7 col-xs-7">
               <input type="text" class="form-control" name="author" id="author" required="required"
