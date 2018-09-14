@@ -303,4 +303,13 @@ public class RenderController {
         return new ModelAndView("testWebsocket");
     }
 
+    /**
+     * 书架
+     *
+     * @return
+     */
+    @GetMapping("/bookself")
+    public ModelAndView bookself() {
+        return ResultUtil.view("bookself");
+    }
 }

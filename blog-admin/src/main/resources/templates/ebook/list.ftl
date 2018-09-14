@@ -155,7 +155,7 @@
               editable: false,
               width: '40px',
               formatter: function (code) {
-                return !code ? '' : '<img src="' + appConfig.qiniuPath + code + '" width="20">';
+                return !code ? '' : '<img src="' + appConfig.qiniuPath + code + '" width="50px">';
               }
             }, {
               field: 'path',
