@@ -4,7 +4,6 @@ keywords="${config.homeKeywords?if_exists}"
 description="${config.homeDesc?if_exists}"
 canonical="/${url?if_exists}">
 </@header>
-
 <div class="container custome-container">
     <@prompt></@prompt>
   <nav class="breadcrumb">
