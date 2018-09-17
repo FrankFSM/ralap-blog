@@ -21,21 +21,18 @@ package com.ralap.blog.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.ralap.blog.business.entity.Article;
+import com.ralap.blog.business.entity.Ebook;
 import com.ralap.blog.business.enums.ArticleStatusEnum;
 import com.ralap.blog.business.service.BizArticleArchivesService;
 import com.ralap.blog.business.service.BizArticleService;
+import com.ralap.blog.business.service.BizEbookService;
 import com.ralap.blog.business.service.SysLinkService;
 import com.ralap.blog.business.service.SysUpdateRecordeService;
 import com.ralap.blog.business.vo.ArticleConditionVO;
+import com.ralap.blog.business.vo.EbookConditionVO;
 import com.ralap.blog.util.ResultUtil;
-import com.ralap.blog.business.entity.Article;
-import com.ralap.blog.business.enums.ArticleStatusEnum;
-import com.ralap.blog.business.service.BizArticleArchivesService;
-import com.ralap.blog.business.service.BizArticleService;
-import com.ralap.blog.business.service.SysLinkService;
-import com.ralap.blog.business.service.SysUpdateRecordeService;
-import com.ralap.blog.business.vo.ArticleConditionVO;
-import com.ralap.blog.util.ResultUtil;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,9 +40,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 页面跳转类
@@ -58,6 +52,7 @@ import java.util.Map;
  */
 @Controller
 public class RenderController {
+
     /**
      * sidebar部分的推荐、近期和随机tab页中显示的文章数
      */
@@ -72,13 +67,11 @@ public class RenderController {
     private SysLinkService sysLinkService;
     @Autowired
     private SysUpdateRecordeService updateRecordeService;
+    @Autowired
+    private BizEbookService bizEbookService;
 
     /**
      * 加载首页的数据
-     *
-     * @param vo
-     * @param model
-     * @return
      */
     private void loadIndexPage(ArticleConditionVO vo, Model model) {
         vo.setStatus(ArticleStatusEnum.PUBLISHED.getCode());
@@ -90,10 +83,6 @@ public class RenderController {
 
     /**
      * 首页
-     *
-     * @param vo
-     * @param model
-     * @return
      */
     @RequestMapping("/")
     public ModelAndView home(ArticleConditionVO vo, Model model) {
@@ -105,14 +94,10 @@ public class RenderController {
 
     /**
      * 首页（分页）
-     *
-     * @param pageNumber
-     * @param vo
-     * @param model
-     * @return
      */
     @RequestMapping("/index/{pageNumber}")
-    public ModelAndView type(@PathVariable("pageNumber") Integer pageNumber, ArticleConditionVO vo, Model model) {
+    public ModelAndView type(@PathVariable("pageNumber") Integer pageNumber, ArticleConditionVO vo,
+            Model model) {
         vo.setPageNumber(pageNumber);
         model.addAttribute("url", INDEX_URL);
         loadIndexPage(vo, model);
@@ -122,10 +107,6 @@ public class RenderController {
 
     /**
      * 分类列表
-     *
-     * @param typeId
-     * @param model
-     * @return
      */
     @GetMapping("/type/{typeId}")
     public ModelAndView type(@PathVariable("typeId") Long typeId, Model model) {
@@ -139,14 +120,10 @@ public class RenderController {
 
     /**
      * 分类列表（分页）
-     *
-     * @param typeId
-     * @param pageNumber
-     * @param model
-     * @return
      */
     @GetMapping("/type/{typeId}/{pageNumber}")
-    public ModelAndView type(@PathVariable("typeId") Long typeId, @PathVariable("pageNumber") Integer pageNumber, Model model) {
+    public ModelAndView type(@PathVariable("typeId") Long typeId,
+            @PathVariable("pageNumber") Integer pageNumber, Model model) {
         ArticleConditionVO vo = new ArticleConditionVO();
         vo.setTypeId(typeId);
         vo.setPageNumber(pageNumber);
@@ -158,10 +135,6 @@ public class RenderController {
 
     /**
      * 标签列表
-     *
-     * @param tagId
-     * @param model
-     * @return
      */
     @GetMapping("/tag/{tagId}")
     public ModelAndView tag(@PathVariable("tagId") Long tagId, Model model) {
@@ -175,14 +148,10 @@ public class RenderController {
 
     /**
      * 标签列表（分页）
-     *
-     * @param tagId
-     * @param pageNumber
-     * @param model
-     * @return
      */
     @GetMapping("/tag/{tagId}/{pageNumber}")
-    public ModelAndView tag(@PathVariable("tagId") Long tagId, @PathVariable("pageNumber") Integer pageNumber, Model model) {
+    public ModelAndView tag(@PathVariable("tagId") Long tagId,
+            @PathVariable("pageNumber") Integer pageNumber, Model model) {
         ArticleConditionVO vo = new ArticleConditionVO();
         vo.setTagId(tagId);
         vo.setPageNumber(pageNumber);
@@ -194,30 +163,27 @@ public class RenderController {
 
     /**
      * 文章详情
-     *
-     * @param model
-     * @param articleId
-     * @return
      */
     @GetMapping("/article/{articleId}")
     public ModelAndView article(Model model, @PathVariable("articleId") Long articleId) {
         Article article = bizArticleService.getByPrimaryKey(articleId);
-        if (article == null || ArticleStatusEnum.UNPUBLISHED.getCode() == article.getStatusEnum().getCode()) {
+        if (article == null || ArticleStatusEnum.UNPUBLISHED.getCode() == article.getStatusEnum()
+                .getCode()) {
             return ResultUtil.redirect("/error/404");
         }
         model.addAttribute("article", article);
         // 上一篇下一篇
-        model.addAttribute("other", bizArticleService.getPrevAndNextArticles(article.getCreateTime()));
+        model.addAttribute("other",
+                bizArticleService.getPrevAndNextArticles(article.getCreateTime()));
         // 相关文章
-        model.addAttribute("relatedList", bizArticleService.listRelatedArticle(SIDEBAR_ARTICLE_SIZE, article));
+        model.addAttribute("relatedList",
+                bizArticleService.listRelatedArticle(SIDEBAR_ARTICLE_SIZE, article));
         model.addAttribute("articleDetail", true);
         return ResultUtil.view("article");
     }
 
     /**
      * 关于
-     *
-     * @return
      */
     @GetMapping("/about")
     public ModelAndView about() {
@@ -226,9 +192,6 @@ public class RenderController {
 
     /**
      * 友情链接
-     *
-     * @param model
-     * @return
      */
     @GetMapping("/links")
     public ModelAndView links(Model model) {
@@ -238,8 +201,6 @@ public class RenderController {
 
     /**
      * 留言板
-     *
-     * @return
      */
     @GetMapping("/guestbook")
     public ModelAndView guestbook() {
@@ -248,9 +209,6 @@ public class RenderController {
 
     /**
      * 归档目录
-     *
-     * @param model
-     * @return
      */
     @GetMapping("/archives")
     public ModelAndView archives(Model model) {
@@ -261,8 +219,6 @@ public class RenderController {
 
     /**
      * 免责声明
-     *
-     * @return
      */
     @GetMapping("/disclaimer")
     public ModelAndView disclaimer() {
@@ -271,9 +227,6 @@ public class RenderController {
 
     /**
      * 站长推荐
-     *
-     * @param model
-     * @return
      */
     @GetMapping("/recommended")
     public ModelAndView recommended(Model model) {
@@ -283,9 +236,6 @@ public class RenderController {
 
     /**
      * 更新日志
-     *
-     * @param model
-     * @return
      */
     @GetMapping("/updateLog")
     public ModelAndView updateLog(Model model) {
@@ -295,8 +245,6 @@ public class RenderController {
 
     /**
      * 测试websocket
-     *
-     * @return
      */
     @GetMapping("/testWebsocket")
     public ModelAndView testWebsocket() {
@@ -305,11 +253,12 @@ public class RenderController {
 
     /**
      * 书架
-     *
-     * @return
      */
     @GetMapping("/bookself")
-    public ModelAndView bookself() {
+    public ModelAndView bookself(EbookConditionVO vo, Model model) {
+        PageInfo<Ebook> pageInfo = bizEbookService.findPageBreakByCondition(vo);
+        model.addAttribute("page", pageInfo);
+        model.addAttribute("model", vo);
         return ResultUtil.view("bookself");
     }
 }
