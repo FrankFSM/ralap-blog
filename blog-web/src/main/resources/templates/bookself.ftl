@@ -24,13 +24,17 @@ canonical="/about">
               <div class="caption">
                 <h5 style="text-align: center">${item.author}</h5>
                 <h3 style="text-align: center">${item.title}</h3>
-                <p><a href="${item.path}" target="_blank" class="btn btn-primary" role="button" style="width: 100%">下载</a>
+                <p><a href="${item.path}" target="_blank" class="btn btn-primary" role="button"
+                      style="width: 100%">下载</a>
                 </p>
               </div>
             </div>
           </div>
         </#list>
-      <#else >
+      <div style="clear: both">
+        <@pageBar></@pageBar>
+      </div>
+      <#else>
                 <article class="fade-in" style="height: auto">
                   <div class="rows">
                     <div class="col-md-10 col-sm-12">

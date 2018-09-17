@@ -58,6 +58,7 @@ public class RenderController {
      */
     private static final int SIDEBAR_ARTICLE_SIZE = 8;
     private static final String INDEX_URL = "index";
+    private static final String BOOKSELF_URL = "bookself";
 
     @Autowired
     private BizArticleService bizArticleService;
@@ -257,6 +258,21 @@ public class RenderController {
     @GetMapping("/bookself")
     public ModelAndView bookself(EbookConditionVO vo, Model model) {
         PageInfo<Ebook> pageInfo = bizEbookService.findPageBreakByCondition(vo);
+        model.addAttribute("url", "bookself");
+        model.addAttribute("page", pageInfo);
+        model.addAttribute("model", vo);
+        return ResultUtil.view("bookself");
+    }
+
+    /**
+     * 书架（分页）
+     */
+    @RequestMapping("/bookself/{pageNumber}")
+    public ModelAndView bookselfPage(@PathVariable("pageNumber") Integer pageNumber,
+            EbookConditionVO vo, Model model) {
+        vo.setPageNumber(pageNumber);
+        PageInfo<Ebook> pageInfo = bizEbookService.findPageBreakByCondition(vo);
+        model.addAttribute("url", BOOKSELF_URL);
         model.addAttribute("page", pageInfo);
         model.addAttribute("model", vo);
         return ResultUtil.view("bookself");
