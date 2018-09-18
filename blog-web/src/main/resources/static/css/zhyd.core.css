@@ -2925,3 +2925,9 @@ nav a:first-child .meta-nav {
   font-size: 1px;
   line-height: 0px;
 }
+
+.text-line {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

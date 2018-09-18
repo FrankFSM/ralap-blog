@@ -17,13 +17,17 @@ canonical="/about">
       <div class="blog-body expansion">
       <#if page.list?exists && (page.list?size > 0)>
         <#list page.list as item>
-          <div class="col-sm-6 col-md-4">
+          <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
-              <img
-                  src="${config.qiuniuBasePath + item.coverImage}" alt="稍等">
+              <#if item.coverImage?exists>
+                <img height="200" data-original="${config.qiuniuBasePath + item.coverImage}-book_200"
+                     class="img-responsive lazy-img" alt="${item.title?if_exists}">
+              <#else>
+                <img height="150" data-original="${config.staticWebSite}/img/user/11.jpg" alt="${item.title?if_exists}">
+              </#if>
               <div class="caption">
-                <h5 style="text-align: center">${item.author}</h5>
-                <h3 style="text-align: center">${item.title}</h3>
+                <h5 class="text-center text-line" style="text">${item.author}</h5>
+                <h3 class="text-center text-line">${item.title}</h3>
                 <p><a href="${item.path}" target="_blank" class="btn btn-primary" role="button"
                       style="width: 100%">下载</a>
                 </p>
