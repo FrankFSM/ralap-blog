@@ -20,10 +20,10 @@ canonical="/about">
           <div class="col-sm-6 col-md-3">
             <div class="thumbnail">
               <#if item.coverImage?exists>
-                <img height="200" data-original="${config.qiuniuBasePath + item.coverImage}-book_200"
+                <img style="height: 200px" data-original="${config.qiuniuBasePath + item.coverImage}"
                      class="img-responsive lazy-img" alt="${item.title?if_exists}">
               <#else>
-                <img height="150" data-original="${config.staticWebSite}/img/user/11.jpg" alt="${item.title?if_exists}">
+                <img style="height: 200px" data-original="${config.staticWebSite}/img/user/11.jpg" alt="${item.title?if_exists}">
               </#if>
               <div class="caption">
                 <h5 class="text-center text-line" style="text">${item.author}</h5>
