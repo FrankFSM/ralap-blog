@@ -23,10 +23,9 @@ import com.ralap.blog.framework.exception.ZhydException;
 import org.springframework.beans.BeanUtils;
 
 /**
- *
  * @author yadong.zhang (yadong.zhang0415(a)gmail.com)
- * @website https://www.zhyd.me
  * @version 1.0
+ * @website https://www.zhyd.me
  * @date 2018/4/18 11:48
  * @since 1.0
  */
@@ -35,12 +34,8 @@ public class BeanConvertUtil {
     /**
      * source --> target 的转换
      *
-     * @param source
-     *         被转换的对象
-     * @param target
-     *         转换成的对象
-     * @param <T>
-     * @return
+     * @param source 被转换的对象
+     * @param target 转换成的对象
      */
     public static <T> T doConvert(Object source, Object target, Class<T> clazz) {
         if (null == source || null == target) {
@@ -56,12 +51,8 @@ public class BeanConvertUtil {
     /**
      * source --> target 的转换
      *
-     * @param source
-     *         被转换的对象
-     * @param target
-     *         转换成的对象
-     * @param <T>
-     * @return
+     * @param source 被转换的对象
+     * @param target 转换成的对象
      */
     public static <T> T doConvert(Object source, Class<T> target) {
         if (null == source || null == target) {
