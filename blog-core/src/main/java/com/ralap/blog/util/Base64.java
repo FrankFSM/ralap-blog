@@ -16,9 +16,11 @@ package com.ralap.blog.util;
 // Source code recreated from a .class file by IntelliJ IDEA
 // (powered by Fernflower decompiler)
 //
+
 import org.apache.shiro.codec.CodecSupport;
 
 public class Base64 {
+
     private static final int CHUNK_SIZE = 76;
     private static final byte[] CHUNK_SEPARATOR = "\r\n".getBytes();
     private static final int BASELENGTH = 255;
@@ -49,7 +51,7 @@ public class Base64 {
         if (length == 0) {
             return true;
         } else {
-            for(int i = 0; i < length; ++i) {
+            for (int i = 0; i < length; ++i) {
                 if (!isBase64(arrayOctect[i])) {
                     return false;
                 }
@@ -66,9 +68,9 @@ public class Base64 {
         int len$ = data.length;
         int i$ = 0;
 
-        while(i$ < len$) {
+        while (i$ < len$) {
             byte aByte = packedData[i$];
-            switch(aByte) {
+            switch (aByte) {
                 default:
                     groomedData[bytesCopied++] = aByte;
                 case 9:
@@ -98,7 +100,7 @@ public class Base64 {
     }
 
     public static byte[] encode(byte[] binaryData, boolean isChunked) {
-        long binaryDataLength = (long)binaryData.length;
+        long binaryDataLength = (long) binaryData.length;
         long lengthDataBits = binaryDataLength * 8L;
         long fewerThan24bits = lengthDataBits % 24L;
         long tripletCount = lengthDataBits / 24L;
@@ -111,14 +113,16 @@ public class Base64 {
         }
 
         if (isChunked) {
-            chunckCount = CHUNK_SEPARATOR.length == 0 ? 0 : (int)Math.ceil((double)((float)encodedDataLengthLong / 76.0F));
-            encodedDataLengthLong += (long)(chunckCount * CHUNK_SEPARATOR.length);
+            chunckCount = CHUNK_SEPARATOR.length == 0 ? 0
+                    : (int) Math.ceil((double) ((float) encodedDataLengthLong / 76.0F));
+            encodedDataLengthLong += (long) (chunckCount * CHUNK_SEPARATOR.length);
         }
 
         if (encodedDataLengthLong > 2147483647L) {
-            throw new IllegalArgumentException("Input array too big, output array would be bigger than Integer.MAX_VALUE=2147483647");
+            throw new IllegalArgumentException(
+                    "Input array too big, output array would be bigger than Integer.MAX_VALUE=2147483647");
         } else {
-            int encodedDataLength = (int)encodedDataLengthLong;
+            int encodedDataLength = (int) encodedDataLengthLong;
             byte[] encodedData = new byte[encodedDataLength];
             int encodedIndex = 0;
             int nextSeparatorIndex = 76;
@@ -132,25 +136,27 @@ public class Base64 {
             int i;
             byte val1;
             byte val2;
-            for(i = 0; (long)i < tripletCount; ++i) {
+            for (i = 0; (long) i < tripletCount; ++i) {
                 dataIndex = i * 3;
                 b1 = binaryData[dataIndex];
                 b2 = binaryData[dataIndex + 1];
                 byte b3 = binaryData[dataIndex + 2];
-                l = (byte)(b2 & 15);
-                k = (byte)(b1 & 3);
-                val1 = (b1 & -128) == 0 ? (byte)(b1 >> 2) : (byte)(b1 >> 2 ^ 192);
-                val2 = (b2 & -128) == 0 ? (byte)(b2 >> 4) : (byte)(b2 >> 4 ^ 240);
-                byte val3 = (b3 & -128) == 0 ? (byte)(b3 >> 6) : (byte)(b3 >> 6 ^ 252);
+                l = (byte) (b2 & 15);
+                k = (byte) (b1 & 3);
+                val1 = (b1 & -128) == 0 ? (byte) (b1 >> 2) : (byte) (b1 >> 2 ^ 192);
+                val2 = (b2 & -128) == 0 ? (byte) (b2 >> 4) : (byte) (b2 >> 4 ^ 240);
+                byte val3 = (b3 & -128) == 0 ? (byte) (b3 >> 6) : (byte) (b3 >> 6 ^ 252);
                 encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
                 encodedData[encodedIndex + 1] = lookUpBase64Alphabet[val2 | k << 4];
                 encodedData[encodedIndex + 2] = lookUpBase64Alphabet[l << 2 | val3];
                 encodedData[encodedIndex + 3] = lookUpBase64Alphabet[b3 & 63];
                 encodedIndex += 4;
                 if (isChunked && encodedIndex == nextSeparatorIndex) {
-                    System.arraycopy(CHUNK_SEPARATOR, 0, encodedData, encodedIndex, CHUNK_SEPARATOR.length);
+                    System.arraycopy(CHUNK_SEPARATOR, 0, encodedData, encodedIndex,
+                            CHUNK_SEPARATOR.length);
                     ++chunksSoFar;
-                    nextSeparatorIndex = 76 * (chunksSoFar + 1) + chunksSoFar * CHUNK_SEPARATOR.length;
+                    nextSeparatorIndex =
+                            76 * (chunksSoFar + 1) + chunksSoFar * CHUNK_SEPARATOR.length;
                     encodedIndex += CHUNK_SEPARATOR.length;
                 }
             }
@@ -158,8 +164,8 @@ public class Base64 {
             dataIndex = i * 3;
             if (fewerThan24bits == 8L) {
                 b1 = binaryData[dataIndex];
-                k = (byte)(b1 & 3);
-                val1 = (b1 & -128) == 0 ? (byte)(b1 >> 2) : (byte)(b1 >> 2 ^ 192);
+                k = (byte) (b1 & 3);
+                val1 = (b1 & -128) == 0 ? (byte) (b1 >> 2) : (byte) (b1 >> 2 ^ 192);
                 encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
                 encodedData[encodedIndex + 1] = lookUpBase64Alphabet[k << 4];
                 encodedData[encodedIndex + 2] = 61;
@@ -167,10 +173,10 @@ public class Base64 {
             } else if (fewerThan24bits == 16L) {
                 b1 = binaryData[dataIndex];
                 b2 = binaryData[dataIndex + 1];
-                l = (byte)(b2 & 15);
-                k = (byte)(b1 & 3);
-                val1 = (b1 & -128) == 0 ? (byte)(b1 >> 2) : (byte)(b1 >> 2 ^ 192);
-                val2 = (b2 & -128) == 0 ? (byte)(b2 >> 4) : (byte)(b2 >> 4 ^ 240);
+                l = (byte) (b2 & 15);
+                k = (byte) (b1 & 3);
+                val1 = (b1 & -128) == 0 ? (byte) (b1 >> 2) : (byte) (b1 >> 2 ^ 192);
+                val2 = (b2 & -128) == 0 ? (byte) (b2 >> 4) : (byte) (b2 >> 4 ^ 240);
                 encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
                 encodedData[encodedIndex + 1] = lookUpBase64Alphabet[val2 | k << 4];
                 encodedData[encodedIndex + 2] = lookUpBase64Alphabet[l << 2];
@@ -178,7 +184,8 @@ public class Base64 {
             }
 
             if (isChunked && chunksSoFar < chunckCount) {
-                System.arraycopy(CHUNK_SEPARATOR, 0, encodedData, encodedDataLength - CHUNK_SEPARATOR.length, CHUNK_SEPARATOR.length);
+                System.arraycopy(CHUNK_SEPARATOR, 0, encodedData,
+                        encodedDataLength - CHUNK_SEPARATOR.length, CHUNK_SEPARATOR.length);
             }
 
             return encodedData;
@@ -209,7 +216,7 @@ public class Base64 {
             int encodedIndex = 0;
             int i = base64Data.length;
 
-            while(base64Data[i - 1] == 61) {
+            while (base64Data[i - 1] == 61) {
                 --i;
                 if (i == 0) {
                     return new byte[0];
@@ -218,7 +225,7 @@ public class Base64 {
 
             byte[] decodedData = new byte[i - numberQuadruple];
 
-            for(i = 0; i < numberQuadruple; ++i) {
+            for (i = 0; i < numberQuadruple; ++i) {
                 int dataIndex = i * 4;
                 byte marker0 = base64Data[dataIndex + 2];
                 byte marker1 = base64Data[dataIndex + 3];
@@ -228,15 +235,15 @@ public class Base64 {
                 if (marker0 != 61 && marker1 != 61) {
                     b3 = base64Alphabet[marker0];
                     byte b4 = base64Alphabet[marker1];
-                    decodedData[encodedIndex] = (byte)(b1 << 2 | b2 >> 4);
-                    decodedData[encodedIndex + 1] = (byte)((b2 & 15) << 4 | b3 >> 2 & 15);
-                    decodedData[encodedIndex + 2] = (byte)(b3 << 6 | b4);
+                    decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
+                    decodedData[encodedIndex + 1] = (byte) ((b2 & 15) << 4 | b3 >> 2 & 15);
+                    decodedData[encodedIndex + 2] = (byte) (b3 << 6 | b4);
                 } else if (marker0 == 61) {
-                    decodedData[encodedIndex] = (byte)(b1 << 2 | b2 >> 4);
+                    decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
                 } else {
                     b3 = base64Alphabet[marker0];
-                    decodedData[encodedIndex] = (byte)(b1 << 2 | b2 >> 4);
-                    decodedData[encodedIndex + 1] = (byte)((b2 & 15) << 4 | b3 >> 2 & 15);
+                    decodedData[encodedIndex] = (byte) (b1 << 2 | b2 >> 4);
+                    decodedData[encodedIndex + 1] = (byte) ((b2 & 15) << 4 | b3 >> 2 & 15);
                 }
 
                 encodedIndex += 3;
@@ -252,7 +259,7 @@ public class Base64 {
         byte[] packedData = data;
         int len$ = data.length;
 
-        for(int i$ = 0; i$ < len$; ++i$) {
+        for (int i$ = 0; i$ < len$; ++i$) {
             byte aByte = packedData[i$];
             if (isBase64(aByte)) {
                 groomedData[bytesCopied++] = aByte;
@@ -266,41 +273,41 @@ public class Base64 {
 
     static {
         int i;
-        for(i = 0; i < 255; ++i) {
+        for (i = 0; i < 255; ++i) {
             base64Alphabet[i] = -1;
         }
 
-        for(i = 90; i >= 65; --i) {
-            base64Alphabet[i] = (byte)(i - 65);
+        for (i = 90; i >= 65; --i) {
+            base64Alphabet[i] = (byte) (i - 65);
         }
 
-        for(i = 122; i >= 97; --i) {
-            base64Alphabet[i] = (byte)(i - 97 + 26);
+        for (i = 122; i >= 97; --i) {
+            base64Alphabet[i] = (byte) (i - 97 + 26);
         }
 
-        for(i = 57; i >= 48; --i) {
-            base64Alphabet[i] = (byte)(i - 48 + 52);
+        for (i = 57; i >= 48; --i) {
+            base64Alphabet[i] = (byte) (i - 48 + 52);
         }
 
         base64Alphabet[43] = 62;
         base64Alphabet[47] = 63;
 
-        for(i = 0; i <= 25; ++i) {
-            lookUpBase64Alphabet[i] = (byte)(65 + i);
+        for (i = 0; i <= 25; ++i) {
+            lookUpBase64Alphabet[i] = (byte) (65 + i);
         }
 
         i = 26;
 
         int j;
-        for(j = 0; i <= 51; ++j) {
-            lookUpBase64Alphabet[i] = (byte)(97 + j);
+        for (j = 0; i <= 51; ++j) {
+            lookUpBase64Alphabet[i] = (byte) (97 + j);
             ++i;
         }
 
         i = 52;
 
-        for(j = 0; i <= 61; ++j) {
-            lookUpBase64Alphabet[i] = (byte)(48 + j);
+        for (j = 0; i <= 61; ++j) {
+            lookUpBase64Alphabet[i] = (byte) (48 + j);
             ++i;
         }
 
