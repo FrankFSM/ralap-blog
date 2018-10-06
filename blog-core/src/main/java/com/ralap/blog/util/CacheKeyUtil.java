@@ -37,8 +37,7 @@ public class CacheKeyUtil {
     /**
      * 获取方法参数组成的key
      *
-     * @param params
-     *         参数数组
+     * @param params 参数数组
      */
     public static String getMethodParamsKey(Object... params) {
         if (StringUtils.isEmpty(params)) {
