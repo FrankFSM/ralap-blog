@@ -84,7 +84,8 @@ public class BussinessLogAspect {
         String ua = RequestUtil.getUa();
 
         log.info("{}-{}.{}", bussinessName, className, currentMethod.getName());
-        log.info("IP: {}, Method: {}, Request URL: {}", RequestUtil.getIp(), RequestUtil.getMethod(), RequestUtil.getRequestUrl());
+        log.info("IP: {}, Method: {}, Request URL: {}", RequestUtil.getIp(),
+                RequestUtil.getMethod(), RequestUtil.getRequestUrl());
         log.info("User-Agent: " + ua);
     }
 
@@ -93,7 +94,8 @@ public class BussinessLogAspect {
             List<String> result = RegexUtils.match(bussinessName, "(?<=\\{)(\\d+)");
             for (String s : result) {
                 int index = Integer.parseInt(s);
-                bussinessName = bussinessName.replaceAll("\\{" + index + "\\}", String.valueOf(params[index - 1]));
+                bussinessName = bussinessName
+                        .replaceAll("\\{" + index + "\\}", String.valueOf(params[index - 1]));
             }
         }
         return bussinessName;
