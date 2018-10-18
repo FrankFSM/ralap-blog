@@ -27,7 +27,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.stereotype.Component;
 
 /**
- *
  * @author yadong.zhang (yadong.zhang0415(a)gmail.com)
  * @version 1.0
  * @website https://www.zhyd.me
@@ -37,4 +36,5 @@ import org.springframework.stereotype.Component;
 @Component
 @MapperScan("com.ralap.blog.persistence.mapper")
 public class MybatisConfig {
+
 }

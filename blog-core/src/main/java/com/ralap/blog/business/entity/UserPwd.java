@@ -28,14 +28,15 @@ import javax.validation.constraints.NotNull;
 
 /**
  * @author yadong.zhang (yadong.zhang0415(a)gmail.com)
- * @website https://www.zhyd.me
  * @version 1.0
+ * @website https://www.zhyd.me
  * @date 2018/6/6 16:34
  * @since 1.0
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class UserPwd {
+
     @NotNull(message = "用户ID不可为空")
     private Long id;
     @NotEmpty(message = "原密码不可为空")

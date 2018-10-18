@@ -42,6 +42,7 @@ import java.time.Duration;
 @EqualsAndHashCode(callSuper = false)
 @Order(-1)
 public class RedisProperties {
+
     private Integer database;
     private String host;
     private Integer port;

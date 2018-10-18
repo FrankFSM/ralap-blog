@@ -51,14 +51,17 @@ import java.util.Map;
  */
 @Component
 public class ArticleTagDirective implements TemplateDirectiveModel {
+
     private static final String METHOD_KEY = "method";
 
     @Autowired
     private BizArticleService articleService;
 
     @Override
-    public void execute(Environment environment, Map map, TemplateModel[] templateModels, TemplateDirectiveBody templateDirectiveBody) throws TemplateException, IOException {
-        DefaultObjectWrapperBuilder builder = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
+    public void execute(Environment environment, Map map, TemplateModel[] templateModels,
+            TemplateDirectiveBody templateDirectiveBody) throws TemplateException, IOException {
+        DefaultObjectWrapperBuilder builder = new DefaultObjectWrapperBuilder(
+                Configuration.VERSION_2_3_25);
         if (map.containsKey(METHOD_KEY)) {
             String method = map.get(METHOD_KEY).toString();
             int pageSize = 10;
@@ -75,19 +78,23 @@ public class ArticleTagDirective implements TemplateDirectiveModel {
             switch (method) {
                 case "recentArticles":
                     // 近期文章
-                    environment.setVariable("recentArticles", builder.build().wrap(articleService.listRecent(pageSize)));
+                    environment.setVariable("recentArticles",
+                            builder.build().wrap(articleService.listRecent(pageSize)));
                     break;
                 case "recommendedList":
                     // 站长推荐
-                    environment.setVariable("recommendedList", builder.build().wrap(articleService.listRecommended(pageSize)));
+                    environment.setVariable("recommendedList",
+                            builder.build().wrap(articleService.listRecommended(pageSize)));
                     break;
                 case "randomList":
                     // 随机文章
-                    environment.setVariable("randomList", builder.build().wrap(articleService.listRandom(pageSize)));
+                    environment.setVariable("randomList",
+                            builder.build().wrap(articleService.listRandom(pageSize)));
                     break;
                 case "hotList":
                     // 热门文章
-                    environment.setVariable("hotList", builder.build().wrap(articleService.listHotArticle(pageSize)));
+                    environment.setVariable("hotList",
+                            builder.build().wrap(articleService.listHotArticle(pageSize)));
                     break;
                 case "typeList":
                     // 按文章分类查询
@@ -97,7 +104,8 @@ public class ArticleTagDirective implements TemplateDirectiveModel {
                     vo.setStatus(ArticleStatusEnum.PUBLISHED.getCode());
                     vo.setPageSize(pageSize);
                     PageInfo<Article> pageInfo = articleService.findPageBreakByCondition(vo);
-                    environment.setVariable("typeList", builder.build().wrap(null == pageInfo ? null : pageInfo.getList()));
+                    environment.setVariable("typeList",
+                            builder.build().wrap(null == pageInfo ? null : pageInfo.getList()));
                     break;
                 default:
                     break;

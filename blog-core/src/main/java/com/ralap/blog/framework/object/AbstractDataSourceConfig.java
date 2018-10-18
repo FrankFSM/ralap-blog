@@ -37,8 +37,8 @@ import javax.sql.DataSource;
  * <code>@MapperScan(basePackages = "xxMapper.java所在的包路径", sqlSessionTemplateRef  = "同下方transactionManagerBeanName")</code><br>
  *
  * @author yadong.zhang (yadong.zhang0415(a)gmail.com)
- * @website https://www.zhyd.me
  * @version 1.0
+ * @website https://www.zhyd.me
  * @date 2018/4/16 16:26
  * @since 1.0
  */
@@ -50,8 +50,6 @@ public abstract class AbstractDataSourceConfig {
      * <code>@Bean(name = "dataSourceBeanName") - 识别bean的唯一标识，应全局唯一</code><br>
      * 非必须,可以通过@Value自己声明数据源参数，然后使用第三方数据源（druid）工具注入<br>
      * <code>@ConfigurationProperties(prefix = "xx.xx.xx")</code><br>
-     *
-     * @return
      */
     public abstract DataSource injectDataSource();
 
@@ -62,12 +60,9 @@ public abstract class AbstractDataSourceConfig {
      * <br>
      * DataSource参数一定要通过下面的注解声明<br>
      * <code>@Qualifier("dataSourceBeanName")</code><br>
-     *
-     * @param dataSource
-     * @return
-     * @throws Exception
      */
-    public abstract SqlSessionFactory injectSqlSessionFactory(DataSource dataSource) throws Exception;
+    public abstract SqlSessionFactory injectSqlSessionFactory(DataSource dataSource)
+            throws Exception;
 
     /**
      * 声明注入事务管理DataSourceTransactionManager<br>
@@ -76,9 +71,6 @@ public abstract class AbstractDataSourceConfig {
      * <br>
      * DataSource参数一定要通过下面的注解声明<br>
      * <code>@Qualifier("sqlSessionFactoryBeanName")</code><br>
-     *
-     * @param dataSource
-     * @return
      */
     public abstract DataSourceTransactionManager injectTransactionManager(DataSource dataSource);
 
@@ -89,10 +81,7 @@ public abstract class AbstractDataSourceConfig {
      * <br>
      * SqlSessionFactory参数一定要通过下面的注解声明<br>
      * <code>@Qualifier("sqlSessionFactoryBeanName")</code><br>
-     *
-     * @param sqlSessionFactory
-     * @return
-     * @throws Exception
      */
-    public abstract SqlSessionTemplate injectSqlSessionTemplate(SqlSessionFactory sqlSessionFactory) throws Exception;
+    public abstract SqlSessionTemplate injectSqlSessionTemplate(SqlSessionFactory sqlSessionFactory)
+            throws Exception;
 }

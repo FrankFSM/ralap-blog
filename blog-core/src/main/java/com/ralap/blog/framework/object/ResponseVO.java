@@ -41,6 +41,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ResponseVO<T> {
+
     private Integer status;
     private String message;
     private T data;

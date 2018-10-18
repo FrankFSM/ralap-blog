@@ -38,6 +38,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class BizCommentDTO {
+
     @JsonIgnore
     BizCommentDTO parentDTO;
     private Long id;

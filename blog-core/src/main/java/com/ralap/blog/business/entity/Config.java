@@ -35,6 +35,7 @@ import java.util.Date;
  * @since 1.0
  */
 public class Config {
+
     private SysConfig sysConfig;
 
     public Config() {
@@ -254,35 +255,35 @@ public class Config {
         this.sysConfig.setQiniuBucketName(qiniuBucketName);
     }
 
-    public String getBaiduPushToken(){
+    public String getBaiduPushToken() {
         return this.sysConfig.getBaiduPushToken();
     }
 
-    public void setBaiduPushToken(String baiduPushToken){
+    public void setBaiduPushToken(String baiduPushToken) {
         this.sysConfig.setBaiduPushToken(baiduPushToken);
     }
 
-    public String getWxPraiseCode(){
+    public String getWxPraiseCode() {
         return this.sysConfig.getWxPraiseCode();
     }
 
-    public void setWxPraiseCode(String wxPraiseCode){
+    public void setWxPraiseCode(String wxPraiseCode) {
         this.sysConfig.setWxPraiseCode(wxPraiseCode);
     }
 
-    public String getZfbPraiseCode(){
+    public String getZfbPraiseCode() {
         return this.sysConfig.getZfbPraiseCode();
     }
 
-    public void setZfbPraiseCode(String zfbPraiseCode){
+    public void setZfbPraiseCode(String zfbPraiseCode) {
         this.sysConfig.setZfbPraiseCode(zfbPraiseCode);
     }
 
-    public String getBaiduApiAk(){
+    public String getBaiduApiAk() {
         return this.sysConfig.getBaiduApiAk();
     }
 
-    public void setBaiduApiAk(String baiduApiAk){
+    public void setBaiduApiAk(String baiduApiAk) {
         this.sysConfig.setBaiduApiAk(baiduApiAk);
     }
 

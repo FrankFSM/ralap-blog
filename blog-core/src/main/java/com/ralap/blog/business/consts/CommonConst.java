@@ -29,6 +29,7 @@ package com.ralap.blog.business.consts;
  * @since 1.0
  */
 public class CommonConst {
+
     /**
      * 安全密码(UUID生成)，作为盐值用于用户密码的加密
      */

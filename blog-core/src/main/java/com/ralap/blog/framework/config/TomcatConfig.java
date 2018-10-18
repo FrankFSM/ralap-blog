@@ -9,21 +9,23 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * <p>Tomcat相关配置</p>
+ *
  * @author zmingchun
  * @version 1.0 (2018/6/20 10:55)
  */
 @Configuration
 public class TomcatConfig {
-	@Bean
-	public ConfigurableServletWebServerFactory webServerFactory() {
-		TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
-		factory.addConnectorCustomizers(
-				connector -> {
-					Http11NioProtocol protocol =
-							(Http11NioProtocol) connector.getProtocolHandler();
-					protocol.setDisableUploadTimeout(false);
-				}
-		);
-		return factory;
-	}
+
+    @Bean
+    public ConfigurableServletWebServerFactory webServerFactory() {
+        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+        factory.addConnectorCustomizers(
+                connector -> {
+                    Http11NioProtocol protocol =
+                            (Http11NioProtocol) connector.getProtocolHandler();
+                    protocol.setDisableUploadTimeout(false);
+                }
+        );
+        return factory;
+    }
 }

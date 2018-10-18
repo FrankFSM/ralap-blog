@@ -56,6 +56,7 @@ import java.util.Map;
  */
 @Component
 public class CustomTagDirective implements TemplateDirectiveModel {
+
     private static final String METHOD_KEY = "method";
     @Autowired
     private BizTypeService bizTypeService;
@@ -69,8 +70,10 @@ public class CustomTagDirective implements TemplateDirectiveModel {
     private SysConfigService configService;
 
     @Override
-    public void execute(Environment environment, Map map, TemplateModel[] templateModels, TemplateDirectiveBody templateDirectiveBody) throws TemplateException, IOException {
-        DefaultObjectWrapperBuilder builder = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
+    public void execute(Environment environment, Map map, TemplateModel[] templateModels,
+            TemplateDirectiveBody templateDirectiveBody) throws TemplateException, IOException {
+        DefaultObjectWrapperBuilder builder = new DefaultObjectWrapperBuilder(
+                Configuration.VERSION_2_3_25);
         if (map.containsKey(METHOD_KEY)) {
             String method = map.get(METHOD_KEY).toString();
             int pageSize = 10;
@@ -80,23 +83,28 @@ public class CustomTagDirective implements TemplateDirectiveModel {
             }
             switch (method) {
                 case "types":
-                    environment.setVariable("types", builder.build().wrap(bizTypeService.listAll()));
+                    environment
+                            .setVariable("types", builder.build().wrap(bizTypeService.listAll()));
                     break;
                 case "tagsList":
                     // 所有标签
-                    environment.setVariable("tagsList", builder.build().wrap(bizTagsService.listAll()));
+                    environment.setVariable("tagsList",
+                            builder.build().wrap(bizTagsService.listAll()));
                     break;
                 case "availableMenus":
                     // 所有可用的菜单资源
-                    environment.setVariable("availableMenus", builder.build().wrap(resourcesService.listAllAvailableMenu()));
+                    environment.setVariable("availableMenus",
+                            builder.build().wrap(resourcesService.listAllAvailableMenu()));
                     break;
                 case "recentComments":
                     // 近期评论
-                    environment.setVariable("recentComments", builder.build().wrap(commentService.listRecentComment(pageSize)));
+                    environment.setVariable("recentComments",
+                            builder.build().wrap(commentService.listRecentComment(pageSize)));
                     break;
                 case "siteInfo":
                     // 站点属性
-                    environment.setVariable("siteInfo", builder.build().wrap(configService.getSiteInfo()));
+                    environment.setVariable("siteInfo",
+                            builder.build().wrap(configService.getSiteInfo()));
                     break;
                 case "menus":
                     Integer userId = null;
@@ -112,7 +120,8 @@ public class CustomTagDirective implements TemplateDirectiveModel {
                     Map<String, Object> params = new HashMap<>(2);
                     params.put("type", "menu");
                     params.put("userId", userId);
-                    environment.setVariable("menus", builder.build().wrap(resourcesService.listUserResources(params)));
+                    environment.setVariable("menus",
+                            builder.build().wrap(resourcesService.listUserResources(params)));
                     break;
                 default:
                     break;

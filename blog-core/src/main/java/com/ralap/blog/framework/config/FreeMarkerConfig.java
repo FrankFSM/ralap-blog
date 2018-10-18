@@ -32,6 +32,7 @@ import javax.annotation.PostConstruct;
 
 /**
  * freemarker配置类
+ *
  * @author yadong.zhang (yadong.zhang0415(a)gmail.com)
  * @version 1.0
  * @website https://www.zhyd.me

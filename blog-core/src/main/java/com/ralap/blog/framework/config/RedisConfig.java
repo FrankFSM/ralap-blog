@@ -57,8 +57,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     /**
      * 缓存数据时Key的生成器，可以依据业务和技术场景自行定制
-     *
-     * @return
      */
     @Bean
     @Override
@@ -83,12 +81,14 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
     public CacheManager cacheManager(JedisConnectionFactory jedisConnectionFactory) {
-		RedisCacheManager cacheManager = RedisCacheManager.builder(RedisCacheWriter.nonLockingRedisCacheWriter(jedisConnectionFactory))
-				// 默认缓存过期时间：天
-				.cacheDefaults(RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofDays(30)))
-				.transactionAware()
-		.build();
-		return cacheManager;
+        RedisCacheManager cacheManager = RedisCacheManager
+                .builder(RedisCacheWriter.nonLockingRedisCacheWriter(jedisConnectionFactory))
+                // 默认缓存过期时间：天
+                .cacheDefaults(
+                        RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofDays(30)))
+                .transactionAware()
+                .build();
+        return cacheManager;
     }
 
     @Bean
@@ -98,7 +98,8 @@ public class RedisConfig extends CachingConfigurerSupport {
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        GenericJackson2JsonRedisSerializer jackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer(om);
+        GenericJackson2JsonRedisSerializer jackson2JsonRedisSerializer = new GenericJackson2JsonRedisSerializer(
+                om);
         template.setValueSerializer(jackson2JsonRedisSerializer);
         template.setKeySerializer(jackson2JsonRedisSerializer);
         template.afterPropertiesSet();
