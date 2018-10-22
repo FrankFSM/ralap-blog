@@ -27,15 +27,18 @@ import com.ralap.blog.business.consts.FileConst;
 
 /**
  * @author yadong.zhang (yadong.zhang0415(a)gmail.com)
- * @website https://www.zhyd.me
  * @version 1.0
+ * @website https://www.zhyd.me
  * @date 2018/4/16 16:26
  * @since 1.0
  */
 public enum QiniuUploadType {
-    QRCODE("ralap/qrcode/", FileConst.DEFAULT_IMG_WIDTH, FileConst.DEFAULT_IMG_HEIGHT, FileConst.DEFAULT_IMG_SIZE),
-    SIMPLE("ralap/article/", FileConst.DEFAULT_IMG_WIDTH, FileConst.DEFAULT_IMG_HEIGHT, FileConst.DEFAULT_IMG_SIZE),
-    COVER_IMAGE("ralap/cover/", FileConst.DEFAULT_IMG_WIDTH, FileConst.DEFAULT_IMG_HEIGHT, FileConst.DEFAULT_IMG_SIZE);
+    QRCODE("ralap/qrcode/", FileConst.DEFAULT_IMG_WIDTH, FileConst.DEFAULT_IMG_HEIGHT,
+            FileConst.DEFAULT_IMG_SIZE),
+    SIMPLE("ralap/article/", FileConst.DEFAULT_IMG_WIDTH, FileConst.DEFAULT_IMG_HEIGHT,
+            FileConst.DEFAULT_IMG_SIZE),
+    COVER_IMAGE("ralap/cover/", FileConst.DEFAULT_IMG_WIDTH, FileConst.DEFAULT_IMG_HEIGHT,
+            FileConst.DEFAULT_IMG_SIZE);
 
     private String path;
     /**
