@@ -41,10 +41,8 @@ public class ImageValidateUtil {
     /**
      * 校验待上传的文件
      *
-     * @param file
-     *         待上传的文件
-     * @param type
-     *         文件类型
+     * @param file 待上传的文件
+     * @param type 文件类型
      */
     public static void validate(MultipartFile file, QiniuUploadType type) throws ZhydFileException {
         ImageFileInfo imgInfo = ImageUtil.getInfo(file);
@@ -57,7 +55,8 @@ public class ImageValidateUtil {
         if (isEmptyArr(width) || isEmptyArr(height) || isEmptyArr(size)) {
             throw new ZhydFileException("图片校验规则配置不正确！");
         }
-        if (checkValue(width, imgInfo.getWidth()) || checkValue(height, imgInfo.getHeight()) || checkValue(size, (int) imgInfo.getSize())) {
+        if (checkValue(width, imgInfo.getWidth()) || checkValue(height, imgInfo.getHeight())
+                || checkValue(size, (int) imgInfo.getSize())) {
             throw new ZhydFileException("图片尺寸不正确，请严格按照提示上传文件！");
         }
     }

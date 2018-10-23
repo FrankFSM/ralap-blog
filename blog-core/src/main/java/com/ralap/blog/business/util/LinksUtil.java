@@ -49,6 +49,7 @@ import java.util.regex.Pattern;
  */
 @Slf4j
 public class LinksUtil {
+
     /**
      * 单位b，1kb = 1024b
      */
@@ -66,14 +67,14 @@ public class LinksUtil {
      * 获取网站的favicon图标<br>
      * https站点可能存在问题
      *
-     * @param url
-     *         网站地址
+     * @param url 网站地址
      * @return favicon地址
      * @deprecated 当前版本为前台用户手动录入favicon，可考虑后台应用使用该接口
      */
     @Deprecated
     public static String getFavicon(String url) {
-        if (!url.startsWith(HttpConsts.HTTP_PROROCOL) && !url.startsWith(HttpConsts.HTTPS_PROROCOL)) {
+        if (!url.startsWith(HttpConsts.HTTP_PROROCOL) && !url
+                .startsWith(HttpConsts.HTTPS_PROROCOL)) {
             url = HttpConsts.HTTP_PROROCOL + url;
         }
         String html = RestClientUtil.get(url);
@@ -89,20 +90,19 @@ public class LinksUtil {
     /**
      * 检查favicon的有效性
      *
-     * @param faviocnUrl
-     *         favicon地址
+     * @param faviocnUrl favicon地址
      * @return true favicon大小合适，false favicon过大或者过小
      */
     public static boolean checkFavicon(String faviocnUrl) {
         int faviconLength = getFaviconSize(faviocnUrl);
-        return faviconLength >= DEFAULT_FACICON_MIN_SIZE && faviconLength < DEFAULT_FACICON_MAX_SIZE;
+        return faviconLength >= DEFAULT_FACICON_MIN_SIZE
+                && faviconLength < DEFAULT_FACICON_MAX_SIZE;
     }
 
     /**
      * 获取网站的favicon图标大小
      *
-     * @param faviocnUrl
-     *         favicon地址
+     * @param faviocnUrl favicon地址
      * @return favicon图标大小
      */
     private static int getFaviconSize(String faviocnUrl) {
@@ -132,14 +132,13 @@ public class LinksUtil {
     /**
      * 爬取url所在的页面，查找是否添加了本站友情链接
      *
-     * @param url
-     *         目标站地址
-     * @param domainName
-     *         本站地址
+     * @param url 目标站地址
+     * @param domainName 本站地址
      * @return true 已链接本站，false 未链接
      */
     public static boolean hasLinkByHtml(String url, String domainName) {
-        if (!url.startsWith(HttpConsts.HTTP_PROROCOL) && !url.startsWith(HttpConsts.HTTPS_PROROCOL)) {
+        if (!url.startsWith(HttpConsts.HTTP_PROROCOL) && !url
+                .startsWith(HttpConsts.HTTPS_PROROCOL)) {
             url = HttpConsts.HTTP_PROROCOL + url;
         }
         String html = RestClientUtil.get(url);
@@ -150,10 +149,8 @@ public class LinksUtil {
      * 通过Chinaz接口
      * 查找是否添加了本站友情链接
      *
-     * @param url
-     *         目标站地址
-     * @param domainName
-     *         本站地址
+     * @param url 目标站地址
+     * @param domainName 本站地址
      * @return true 已链接本站，false 未链接
      */
     public static boolean hasLinkByChinaz(String url, String domainName) {
@@ -162,7 +159,8 @@ public class LinksUtil {
             url = url.replace(HttpConsts.HTTPS_PROROCOL, "");
         }
         try {
-            Document htmlDocument = Jsoup.parse(RestClientUtil.get("http://link.chinaz.com/" + url));
+            Document htmlDocument = Jsoup
+                    .parse(RestClientUtil.get("http://link.chinaz.com/" + url));
             Element ulElement = HtmlUtil.getElementById(htmlDocument, "ulLink");
             int maxRequestCount = 2;
             while (ulElement == null) {
@@ -184,10 +182,13 @@ public class LinksUtil {
                 if (liElement == null) {
                     continue;
                 }
-                String text = liElement.getElementsByClass("tl").get(0).getElementsByTag("span").get(1).getElementsByTag("a").get(0).text();
+                String text = liElement.getElementsByClass("tl").get(0).getElementsByTag("span")
+                        .get(1).getElementsByTag("a").get(0).text();
                 if (text.startsWith(domainName) || text.startsWith("www." + domainName)
-                        || text.startsWith(HttpConsts.HTTP_PROROCOL + domainName) || text.startsWith(HttpConsts.HTTP_PROROCOL + "www." + domainName)
-                        || text.startsWith(HttpConsts.HTTPS_PROROCOL + domainName) || text.startsWith(HttpConsts.HTTPS_PROROCOL + "www." + domainName)) {
+                        || text.startsWith(HttpConsts.HTTP_PROROCOL + domainName) || text
+                        .startsWith(HttpConsts.HTTP_PROROCOL + "www." + domainName)
+                        || text.startsWith(HttpConsts.HTTPS_PROROCOL + domainName) || text
+                        .startsWith(HttpConsts.HTTPS_PROROCOL + "www." + domainName)) {
                     return true;
                 }
             }
