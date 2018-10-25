@@ -67,6 +67,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/article")
 public class RestArticleController {
+
     @Autowired
     private BizArticleService articleService;
     @Autowired
@@ -124,7 +125,8 @@ public class RestArticleController {
             params.append(siteUrl).append("/article/").append(id).append("\n");
         }
         // urls: 推送, update: 更新, del: 删除
-        String url = UrlBuildUtil.getBaiduPushUrl(type.toString(), config.getSiteUrl(), config.getBaiduPushToken());
+        String url = UrlBuildUtil
+                .getBaiduPushUrl(type.toString(), config.getSiteUrl(), config.getBaiduPushToken());
         /**
          * success	       	int	    成功推送的url条数
          * remain	       	int	    当天剩余的可推送url条数
