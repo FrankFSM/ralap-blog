@@ -50,6 +50,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/config")
 public class RestConfigController {
+
     @Autowired
     private SysConfigService sysConfigService;
 
@@ -62,11 +63,13 @@ public class RestConfigController {
     @RequiresRoles("role:root")
     @PostMapping("/edit")
     public ResponseVO edit(Config config,
-                           @RequestParam(required = false) MultipartFile wxPraiseCodeFile,
-                           @RequestParam(required = false) MultipartFile zfbPraiseCodeFile) {
-        config.setWxPraiseCode(FileUtil.uploadToQiniu(wxPraiseCodeFile, QiniuUploadType.QRCODE, true));
-        config.setZfbPraiseCode(FileUtil.uploadToQiniu(zfbPraiseCodeFile, QiniuUploadType.QRCODE, true));
-        if(null != wxPraiseCodeFile || null != zfbPraiseCodeFile){
+            @RequestParam(required = false) MultipartFile wxPraiseCodeFile,
+            @RequestParam(required = false) MultipartFile zfbPraiseCodeFile) {
+        config.setWxPraiseCode(
+                FileUtil.uploadToQiniu(wxPraiseCodeFile, QiniuUploadType.QRCODE, true));
+        config.setZfbPraiseCode(
+                FileUtil.uploadToQiniu(zfbPraiseCodeFile, QiniuUploadType.QRCODE, true));
+        if (null != wxPraiseCodeFile || null != zfbPraiseCodeFile) {
             Config configDB = sysConfigService.get();
             FileUtil.removeQiniu(configDB.getWxPraiseCode(), configDB.getZfbPraiseCode());
         }

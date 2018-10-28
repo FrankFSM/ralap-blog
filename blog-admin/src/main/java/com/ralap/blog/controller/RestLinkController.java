@@ -58,6 +58,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/link")
 public class RestLinkController {
+
     @Autowired
     private SysLinkService linkService;
     @Autowired
