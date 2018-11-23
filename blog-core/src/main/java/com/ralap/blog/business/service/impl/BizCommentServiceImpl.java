@@ -78,6 +78,7 @@ public class BizCommentServiceImpl implements BizCommentService {
     @Autowired
     private MailService mailService;
 
+
     @Autowired
     private SysConfigService configService;
 
