@@ -53,6 +53,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/type")
 public class RestTypeController {
+
     @Autowired
     private BizTypeService typeService;
 

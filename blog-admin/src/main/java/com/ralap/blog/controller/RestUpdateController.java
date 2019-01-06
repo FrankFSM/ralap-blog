@@ -52,6 +52,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/update")
 public class RestUpdateController {
+
     @Autowired
     private SysUpdateRecordeService updateRecordeService;
 
@@ -69,7 +70,8 @@ public class RestUpdateController {
         return ResultUtil.success("成功");
     }
 
-    @RequiresPermissions(value = {"updateLog:batchDelete", "updateLog:delete"}, logical = Logical.OR)
+    @RequiresPermissions(value = {"updateLog:batchDelete",
+            "updateLog:delete"}, logical = Logical.OR)
     @PostMapping(value = "/remove")
     public ResponseVO remove(Long[] ids) {
         if (null == ids) {

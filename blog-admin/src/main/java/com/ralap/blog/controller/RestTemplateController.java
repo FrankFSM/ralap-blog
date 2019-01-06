@@ -52,6 +52,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/template")
 public class RestTemplateController {
+
     @Autowired
     private SysTemplateService templateService;
 

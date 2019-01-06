@@ -57,6 +57,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class RestUserController {
+
     @Autowired
     private SysUserService userService;
     @Autowired
@@ -72,11 +73,8 @@ public class RestUserController {
     /**
      * 保存用户角色
      *
-     * @param userId
-     * @param roleIds
-     *         用户角色
-     *         此处获取的参数的角色id是以 “,” 分隔的字符串
-     * @return
+     * @param roleIds 用户角色
+     * 此处获取的参数的角色id是以 “,” 分隔的字符串
      */
     @RequiresPermissions("user:allotRole")
     @PostMapping("/saveUserRoles")
@@ -93,7 +91,7 @@ public class RestUserController {
     public ResponseVO add(User user) {
         User u = userService.getByUserName(user.getUsername());
         if (u != null) {
-            return ResultUtil.error("该用户名["+user.getUsername()+"]已存在！请更改用户名");
+            return ResultUtil.error("该用户名[" + user.getUsername() + "]已存在！请更改用户名");
         }
         try {
             user.setPassword(PasswordUtil.encrypt(user.getPassword(), user.getUsername()));
